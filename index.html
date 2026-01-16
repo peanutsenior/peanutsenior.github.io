@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="description" content="Mohamed Kandri – Full-Stack Developer & Cybersecurity Specialist. Expertise in secure system architecture, applied cryptography, and AI chatbots.">
+  <meta name="keywords" content="cybersecurity, full-stack developer, encryption, RSA/AES, Flask, React, secure file sharing, logistics optimization, Morocco">
+  <title>Mohamed Kandri | Dev & Security</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'JetBrains Mono', monospace;
+      background-color: #1e1e1e;
+      color: #d4d4d4;
+      scroll-behavior: smooth;
+      line-height: 1.6;
+      padding-bottom: 28px; /* space for status bar */
+    }
+    .keyword { color: #c586c0; }
+    .function { color: #4ec9b0; }
+    .string { color: #ce9178; }
+    .comment { color: #6a9955; }
+    .section {
+      min-height: 100vh;
+      padding: 2rem 1.5rem;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    h2 {
+      font-size: 1.25rem;
+      margin-bottom: 1.25rem;
+      color: #4ec9b0;
+      border-bottom: 1px solid #3a3a3a;
+      padding-bottom: 0.5rem;
+    }
+    .project-tag {
+      display: inline-block;
+      margin-right: 0.5rem;
+      color: #d7ba7d;
+    }
+
+    /* Traffic lights */
+    .terminal-dots {
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      display: flex;
+      gap: 6px;
+      z-index: 10;
+    }
+    .dot { width: 12px; height: 12px; border-radius: 50%; }
+
+    /* Name header */
+    .name-header {
+      font-size: 1.75rem;
+      font-weight: 500;
+      padding: 1.25rem 0 0.75rem;
+      text-align: center;
+    }
+
+    /* Tab bar */
+    .tab-bar {
+      display: flex;
+      gap: 2px;
+      padding: 4px 6px;
+      margin-bottom: 2rem;
+      overflow-x: auto;
+      justify-content: center;
+    }
+    .tab {
+      padding: 6px 12px;
+      background-color: #2d2d2d;
+      border: 1px solid #3a3a3a;
+      border-radius: 3px;
+      color: #d4d4d4;
+      text-decoration: none;
+      white-space: nowrap;
+      font-size: 0.875rem;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .tab:hover {
+      background-color: #3a3a3a;
+    }
+    .tab.active {
+      background-color: #1e1e1e;
+      border-color: #4ec9b0;
+      color: #4ec9b0;
+    }
+
+    /* Download button */
+    .download-btn {
+      display: inline-block;
+      background-color: #2d2d2d;
+      color: #4ec9b0;
+      padding: 0.5rem 1rem;
+      border: 1px solid #3a3a3a;
+      border-radius: 4px;
+      text-decoration: none;
+      font-family: inherit;
+      margin-top: 0.75rem;
+    }
+    .download-btn:hover {
+      background-color: #3a3a3a;
+    }
+
+    /* Expandable project */
+    .project-card {
+      margin-bottom: 1.5rem;
+      cursor: pointer;
+    }
+    .project-detail {
+      margin-top: 0.75rem;
+      padding-left: 1rem;
+      border-left: 2px solid #4ec9b0;
+      display: none;
+    }
+    .project-card.expanded .project-detail {
+      display: block;
+    }
+
+    /* Terminal */
+    .terminal {
+      background: #1e1e1e;
+      border: 1px solid #3a3a3a;
+      border-radius: 4px;
+      padding: 1rem;
+      margin: 1.5rem 0;
+      font-size: 0.9rem;
+    }
+    .terminal-line {
+      margin-bottom: 0.25rem;
+    }
+    .terminal-input {
+      display: flex;
+      align-items: center;
+    }
+    .terminal-prompt {
+      color: #4ec9b0;
+      margin-right: 0.5rem;
+    }
+    .terminal-input input {
+      background: transparent;
+      border: none;
+      outline: none;
+      color: #d4d4d4;
+      font-family: inherit;
+      width: 100%;
+    }
+
+    /* Status bar */
+    .status-bar {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      background-color: #252526;
+      color: #949494;
+      font-size: 0.75rem;
+      padding: 0.25rem 1rem;
+      border-top: 1px solid #3a3a3a;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    /* Screen reader only */
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ATS Optimization -->
+  <div class="sr-only">
+    Mohamed Kandri is a cybersecurity graduate and full-stack developer specializing in secure system architecture, applied cryptography, hybrid RSA/AES encryption, AI chatbots, and logistics optimization using GraphHopper API. Proficient in Python, JavaScript, React, Vue, Laravel, Flask, and secure authentication systems. Seeking operational roles in application security, secure software engineering, or cybersecurity operations.
+  </div>
+
+  <!-- Traffic lights -->
+  <div class="terminal-dots">
+    <div class="dot bg-red-500"></div>
+    <div class="dot bg-yellow-500"></div>
+    <div class="dot bg-green-500"></div>
+  </div>
+
+  <!-- Header & Tabs -->
+  <div>
+    <h1 class="name-header">Mohamed Kandri</h1>
+    <div class="tab-bar">
+      <a href="#home" class="tab active">📄 Home</a>
+      <a href="#about" class="tab">📄 About</a>
+      <a href="#education" class="tab">🎓 Education</a>
+      <a href="#skills" class="tab">🛠️ Skills</a>
+      <a href="#projects" class="tab">🚀 Projects</a>
+      <a href="#contact" class="tab">📬 Contact</a>
+    </div>
+  </div>
+
+  <!-- Home -->
+  <section class="section" id="home">
+    <pre class="text-sm md:text-base">
+<span class="keyword">const</span> <span class="function">developer</span> = {
+  <span class="keyword">role</span>: <span class="string">"Full-Stack Developer & Cybersecurity Specialist"</span>,
+  <span class="keyword">focus</span>: [
+    <span class="string">"Secure system architecture"</span>,
+    <span class="string">"Applied cryptography"</span>,
+    <span class="string">"AI-powered chatbots"</span>,
+    <span class="string">"Logistics optimization"</span>
+  ],
+  <span class="keyword">current</span>: <span class="string">"Building brain_game with Flutter"</span>
+};
+
+<span class="comment">// 👋 Welcome to my digital workspace.</span>
+<span class="comment">// 💼 Seeking first operational role in cybersecurity.</span>
+    </pre>
+  </section>
+
+  <!-- About -->
+  <section class="section" id="about">
+    <h2># About</h2>
+    <pre class="text-sm md:text-base">
+<span class="comment">// A builder of secure, intelligent systems.</span>
+
+Graduate in <span class="string">Cybersecurity</span> (EST, 2025) with a 
+<span class="string">Full-Stack Development</span> diploma (ISTA, 2024). 
+My work sits at the intersection of software engineering and defensive security.
+
+<span class="comment">// Core principles:</span>
+- Systems must be <span class="function">secure by design</span>, not as an afterthought
+- Code should solve <span class="function">real operational problems</span>
+- Simplicity and clarity > unnecessary complexity
+
+<span class="comment">// Experience includes:</span>
+- Secure file-sharing over LAN with hybrid RSA/AES encryption
+- AI & rule-based chatbots with admin panels
+- Logistics optimization using GraphHopper API
+- WordPress automation and brand digital strategy
+
+<span class="comment">// Not seeking PFE — ready for operational impact.</span>
+    </pre>
+
+    <h2 class="mt-6"># Security Philosophy</h2>
+    <pre class="text-sm md:text-base mt-2">
+<span class="keyword">const</span> <span class="function">securityPhilosophy</span> = {
+  <span class="keyword">principle</span>: <span class="string">"Security is a process, not a product"</span>,
+  <span class="keyword">practices</span>: [
+    <span class="string">"Encrypt data in transit AND at rest"</span>,
+    <span class="string">"Principle of least privilege for all services"</span>,
+    <span class="string">"Assume breach — design for containment"</span>,
+    <span class="string">"Automate security checks in CI/CD"</span>
+  ]
+};
+    </pre>
+  </section>
+
+  <!-- Education -->
+  <section class="section" id="education">
+    <h2># Education</h2>
+    <pre class="text-sm md:text-base">
+<span class="keyword">const</span> <span class="function">education</span> = [
+  {
+    <span class="keyword">degree</span>: <span class="string">"License in Cybersecurity"</span>,
+    <span class="keyword">school</span>: <span class="string">"Ecole Supérieure de Technologie (EST)"</span>,
+    <span class="keyword">period</span>: <span class="string">"2024–2025"</span>
+  },
+  {
+    <span class="keyword">degree</span>: <span class="string">"Diplôme Technicien Spécialisé – Full Stack"</span>,
+    <span class="keyword">school</span>: <span class="string">"ISTA TIT MELIL"</span>,
+    <span class="keyword">period</span>: <span class="string">"2022–2024"</span>
+  },
+  {
+    <span class="keyword">degree</span>: <span class="string">"Biology Degree"</span>,
+    <span class="keyword">school</span>: <span class="string">"Faculté des Sciences Ben M’Sik – UH2C"</span>,
+    <span class="keyword">period</span>: <span class="string">"Completed"</span>
+  },
+  {
+    <span class="keyword">degree</span>: <span class="string">"Medicine (Partial)"</span>,
+    <span class="keyword">school</span>: <span class="string">"Zaporizhzhia State Medical University"</span>,
+    <span class="keyword">period</span>: <span class="string">"2020–2022"</span>
+  }
+];
+    </pre>
+  </section>
+
+  <!-- Skills -->
+  <section class="section" id="skills">
+    <h2># Tech Stack</h2>
+    <pre class="text-sm md:text-base">
+<span class="keyword">const</span> <span class="function">techStack</span> = {
+  <span class="keyword">languages</span>: [<span class="string">"JavaScript/TypeScript"</span>, <span class="string">"Python"</span>, <span class="string">"PHP"</span>, <span class="string">"SQL"</span>, <span class="string">"HTML/CSS"</span>],
+  <span class="keyword">frontend</span>: [<span class="string">"React"</span>, <span class="string">"Vue.js"</span>, <span class="string">"Tailwind CSS"</span>, <span class="string">"Bootstrap"</span>],
+  <span class="keyword">backend</span>: [<span class="string">"Laravel"</span>, <span class="string">"Flask"</span>, <span class="string">"Node.js"</span>],
+  <span class="keyword">security</span>: [
+    <span class="string">"Token-based auth"</span>,
+    <span class="string">"RSA/AES hybrid encryption"</span>,
+    <span class="string">"HTTPS/TLS"</span>,
+    <span class="string">"System hardening"</span>
+  ],
+  <span class="keyword">tools</span>: [<span class="string">"Git/GitLab"</span>, <span class="string">"VS Code"</span>, <span class="string">"Chrome DevTools"</span>, <span class="string">"Linux"</span>, <span class="string">"Flutter"</span>]
+};
+    </pre>
+  </section>
+
+  <!-- Projects -->
+  <section class="section" id="projects">
+    <h2># Projects</h2>
+    <p class="comment mb-4">// Click any project to expand technical details</p>
+
+    <!-- Project 1 -->
+    <div class="project-card" onclick="toggleProject(this)">
+      <pre class="text-sm">
+{
+  <span class="keyword">title</span>: <span class="string">"Encrypted File Sharing System"</span>,
+  <span class="keyword">tags</span>: [<span class="project-tag">🛡️ Security</span>, <span class="project-tag">🔐 Encryption</span>],
+  <span class="keyword">desc</span>: <span class="string">"LAN-based file sharing with RSA/AES hybrid encryption..."</span>
+}
+      </pre>
+      <div class="project-detail comment">
+        - Generated ephemeral RSA key pairs per session<br>
+        - Used AES-256-GCM for authenticated file encryption<br>
+        - Secured transport via Flask HTTPS (TLS 1.3)<br>
+        - Implemented JWT-based access control<br>
+        - Hybrid model: RSA encrypts AES key, AES encrypts file
+      </div>
+    </div>
+
+    <!-- Project 2 -->
+    <div class="project-card" onclick="toggleProject(this)">
+      <pre class="text-sm">
+{
+  <span class="keyword">title</span>: <span class="string">"Jasmine – Customer Support Chatbot"</span>,
+  <span class="keyword">tags</span>: [<span class="project-tag">🤖 AI</span>, <span class="project-tag">💬 Chatbot</span>],
+  <span class="keyword">desc</span>: <span class="string">"Dynamic chatbot with admin panel and WhatsApp integration..."</span>
+}
+      </pre>
+      <div class="project-detail comment">
+        - Rule-based engine with fallback to NLP intents<br>
+        - Admin dashboard for response management<br>
+        - WhatsApp Business API integration<br>
+        - MySQL backend with conversation history<br>
+        - Rate limiting and input sanitization for security
+      </div>
+    </div>
+
+    <!-- Add more projects similarly -->
+  </section>
+
+  <!-- Contact -->
+  <section class="section" id="contact">
+    <h2># Contact</h2>
+    <pre class="text-sm md:text-base">
+<span class="comment">// Let's build something secure together</span>
+
+<span class="keyword">email</span> = <span class="string">"Skandri30@gmail.com"</span>
+<span class="keyword">github</span> = <span class="string">"https://github.com/yourusername"</span>
+<span class="keyword">linkedin</span> = <span class="string">"https://linkedin.com/in/yourprofile"</span>
+    </pre>
+
+    <a href="Mohamed_Kandri_CV.pdf" download class="download-btn">
+      ⬇️ Download CV (PDF)
+    </a>
+
+    <!-- Mini Terminal -->
+    <div class="terminal mt-6">
+      <div class="terminal-line comment">// Type: help, whoami, projects, contact</div>
+      <div class="terminal-input">
+        <span class="terminal-prompt">user@portfolio:~$</span>
+        <input type="text" id="terminal-input" autofocus />
+      </div>
+      <div id="terminal-output" class="mt-2"></div>
+    </div>
+  </section>
+
+  <!-- Status Bar -->
+  <div class="status-bar">
+    <span>✅ brain_game v0.3</span>
+    <span>🔒 RSA/AES Active • 🛠️ Open to Roles</span>
+  </div>
+
+  <!-- Scripts -->
+  <script>
+    // Expand projects
+    function toggleProject(el) {
+      el.classList.toggle('expanded');
+    }
+
+    // Mini Terminal
+    const terminalInput = document.getElementById('terminal-input');
+    const terminalOutput = document.getElementById('terminal-output');
+
+    terminalInput.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') {
+        const cmd = terminalInput.value.trim().toLowerCase();
+        let response = '';
+
+        switch(cmd) {
+          case 'help':
+            response = `
+              <div class="comment">// Available commands:</div>
+              <div>whoami → About me</div>
+              <div>projects → List projects</div>
+              <div>contact → Get in touch</div>
+              <div>clear → Clear terminal</div>
+            `;
+            break;
+          case 'whoami':
+            response = `<div class="string">Full-Stack Developer & Cybersecurity Specialist. Building secure systems with applied cryptography.</div>`;
+            break;
+          case 'projects':
+            response = `<div><span class="function">brain_game</span>, <span class="function">Encrypted File Sharing</span>, <span class="function">Jasmine Chatbot</span>, <span class="function">Logistics Optimizer</span></div>`;
+            break;
+          case 'contact':
+            response = `<div>Email: <span class="string">Skandri30@gmail.com</span></div>`;
+            break;
+          case 'clear':
+            terminalOutput.innerHTML = '';
+            terminalInput.value = '';
+            return;
+          default:
+            response = `<div class="comment">Command not found. Type 'help'.</div>`;
+        }
+
+        terminalOutput.innerHTML += `<div class="terminal-line">${response}</div>`;
+        terminalInput.value = '';
+        terminalOutput.scrollTop = terminalOutput.scrollHeight;
+      }
+    });
+
+    // Scroll spy
+    window.addEventListener('scroll', () => {
+      const sections = ['home', 'about', 'education', 'skills', 'projects', 'contact'];
+      let current = 'home';
+      for (const id of sections) {
+        const section = document.getElementById(id);
+        const rect = section.getBoundingClientRect();
+        if (rect.top <= 100 && rect.bottom >= 100) {
+          current = id;
+        }
+      }
+      document.querySelectorAll('.tab').forEach(tab => {
+        tab.classList.remove('active');
+        if (tab.getAttribute('href') === '#' + current) {
+          tab.classList.add('active');
+        }
+      });
+    });
+  </script>
+
+</body>
+</html>
